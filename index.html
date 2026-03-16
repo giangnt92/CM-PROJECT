@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C&M - Công Ty Kỹ Thuật & Công Nghệ</title>
+<style>
+  :root {
+    --black: #0a0a0a;
+    --dark: #111214;
+    --panel: #181a1e;
+    --border: #2a2d33;
+    --accent: #e8c84a;
+    --accent2: #ff6b35;
+    --text: #c8cdd6;
+    --muted: #e2e4e7;
+    --white: #f0f2f5;
+    --red: #e03b3b;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: Arial, sans-serif;
+    background: var(--black);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    background: var(--dark);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .topbar-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .topbar-left { display: flex; gap: 20px; align-items: center; }
+  .topbar-right { display: flex; gap: 16px; align-items: center; }
+  .topbar a:hover { color: var(--accent); transition: color .2s; }
+  .topbar .hotline { color: var(--accent); font-weight: 500; letter-spacing: .5px; }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--black);
+    border-bottom: 2px solid var(--accent);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 40px rgba(0,0,0,.6);
+  }
+  .header-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center;
+    height: 72px; gap: 30px; /* Bạn có thể thay đổi số 48px này để chỉnh khoảng cách từ logo đến menu */
+  }
+  .logo {
+    display: flex; align-items: center; gap: 14px; flex-shrink: 0;
+  }
+  .logo-mark {
+    width: 48px; height: 48px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: var(--black);
+    clip-path: polygon(10% 0%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 90%, 0% 10%);
+  }
+  .logo-text { line-height: 1.1; }
+  .logo-name {
+    font-size: 28px; color: var(--white); letter-spacing: 2px;
+  }
+  .logo-sub {
+    font-size: 9px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase;
+  }
+
+  /* NAV */
+  nav { display: flex; align-items: center; gap: 2px; flex: 1; }
+  .nav-item { position: relative; }
+  .nav-link {
+    display: flex; align-items: center; gap: 5px;
+    padding: 10px 14px;
+    font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--muted);
+    transition: color .2s, background .2s;
+    white-space: nowrap;
+  }
+  .nav-link:hover, .nav-link.active { color: var(--accent); }
+  .nav-link .arrow { font-size: 9px; transition: transform .2s; }
+  .nav-item:hover .arrow { transform: rotate(180deg); }
+
+  .dropdown {
+    display: none;
+    position: absolute; top: 100%; left: 0;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    min-width: 260px;
+    z-index: 200;
+    box-shadow: 0 12px 40px rgba(0,0,0,.6);
+  }
+  .nav-item:hover .dropdown { display: block; }
+  .dropdown a {
+    display: block; padding: 11px 18px;
+    font-size: 12px; color: var(--muted);
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    transition: all .15s;
+  }
+  .dropdown a:hover { color: var(--white); background: rgba(232,200,74,.06); padding-left: 24px; }
+
+  .nav-contact {
+    margin-left: auto; /* Đẩy nút Liên hệ sang góc phải */
+    background: var(--accent); color: var(--black);
+    padding: 8px 18px; font-size: 12px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: background .2s, transform .15s;
+    white-space: nowrap;
+  }
+  .nav-contact:hover { background: #f0d060; transform: translateY(-1px); }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 8px; margin-left: auto;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--accent); transition: all .3s;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(rgba(17, 18, 20, 0.85), rgba(17, 18, 20, 0.85)), url('./images/banner-1.jpg') center/cover no-repeat;
+    border-bottom: 1px solid var(--border);
+    padding: 64px 0 56px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: 'C&M';
+    position: absolute; right: -20px; top: -30px;
+    font-size: 280px; color: rgba(232,200,74,.04);
+    line-height: 1; pointer-events: none; user-select: none;
+  }
+  .hero-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 56px;
+  }
+  .hero-left { max-width: 800px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(232,200,74,.1); border: 1px solid rgba(232,200,74,.3);
+    padding: 5px 12px;
+    font-size: 10px; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero-badge::before { content: '●'; font-size: 8px; animation: blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+  .hero h1 {
+    font-size: clamp(48px, 6vw, 82px); line-height: 1.1;
+    color: var(--white); letter-spacing: 1px; margin-bottom: 24px;
+    font-weight: 800; text-transform: uppercase;
+    text-shadow: 2px 4px 16px rgba(0, 0, 0, 0.6);
+  }
+  .hero h1 span {
+    color: var(--accent);
+    text-shadow: 0 0 24px rgba(232, 200, 74, 0.4);
+  }
+  .hero p {
+    font-size: 15px; color: var(--muted); line-height: 1.8;
+    max-width: 560px;
+    margin-bottom: 32px;
+  }
+  .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start; }
+  .btn-primary {
+    background: var(--accent); color: var(--black);
+    padding: 13px 28px; font-weight: 700; font-size: 13px;
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: all .2s; display: inline-block;
+  }
+  .btn-primary:hover { background: #f0d060; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,200,74,.3); }
+  .btn-outline {
+    border: 1px solid var(--accent); color: var(--accent);
+    padding: 13px 28px; font-weight: 500; font-size: 13px;
+    letter-spacing: .5px; transition: all .2s; display: inline-block;
+  }
+  .btn-outline:hover { background: var(--accent); color: var(--black); }
+
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-start;
+    width: 100%;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border);
+    padding: 24px;
+    border-radius: 8px;
+  }
+  .stat {
+    text-align: left;
+    padding: 0 24px;
+    animation: fadeUp .5s ease-out both;
+    border-right: 1px solid var(--border);
+    flex-grow: 1;
+    flex-basis: 180px;
+  }
+  .stat-num {
+    font-size: 42px; color: var(--accent); line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-label {
+    font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase;
+  }
+  .stat:last-child {
+    border-right: none;
+  }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+  }
+  .breadcrumb-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 11px; color: var(--muted);
+  }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb .sep { color: var(--accent); }
+  .breadcrumb .current { color: var(--accent); }
+
+  /* ── MAIN LAYOUT ── */
+  .main-layout {
+    max-width: 1280px; margin: 0 auto; padding: 40px 24px;
+    display: grid; grid-template-columns: 1fr 300px; gap: 40px;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 32px;
+  }
+  .section-title h2 {
+    font-size: 36px; color: var(--white); letter-spacing: 2px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1; height: 1px; background: var(--border);
+  }
+  .section-title::before {
+    content: '//'; font-size: 14px; color: var(--accent);
+  }
+
+  /* ── SERVICE GRID ── */
+  .service-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .service-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: all .25s;
+    cursor: pointer;
+    position: relative;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--accent);
+    transition: height .3s;
+  }
+  .service-card:hover { border-color: rgba(232,200,74,.4); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+  .service-card:hover::before { height: 100%; }
+
+  .card-img {
+    width: 100%; aspect-ratio: 16/9; overflow: hidden;
+    background: var(--dark);
+    position: relative;
+  }
+  .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .service-card:hover .card-img img { transform: scale(1.05); }
+  .card-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+    color: rgba(232,200,74,.15);
+  }
+
+  .card-body { padding: 18px 20px; }
+  .card-meta {
+    font-size: 10px;
+    color: var(--muted); letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-meta::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
+  .card-title {
+    font-size: 14px; font-weight: 600; color: var(--white);
+    line-height: 1.4; margin-bottom: 10px;
+    transition: color .2s;
+  }
+  .service-card:hover .card-title { color: var(--accent); }
+  .card-excerpt { font-size: 12px; color: var(--muted); line-height: 1.7; }
+  .card-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 14px; font-size: 11px; font-weight: 600;
+    color: var(--accent); letter-spacing: 1px; text-transform: uppercase;
+  }
+  .card-link::after { content: '→'; transition: transform .2s; }
+  .service-card:hover .card-link::after { transform: translateX(4px); }
+
+  /* ── PAGINATION ── */
+  .pagination {
+    display: flex; gap: 8px; margin-top: 32px; align-items: center;
+  }
+  .page-btn {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border);
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    transition: all .2s; cursor: pointer;
+  }
+  .page-btn:hover, .page-btn.active {
+    background: var(--accent); color: var(--black); border-color: var(--accent);
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar { display: flex; flex-direction: column; gap: 24px; }
+
+  .sidebar-widget {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .widget-title {
+    background: var(--dark);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 18px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 18px; color: var(--white); letter-spacing: 1.5px;
+  }
+  .widget-title span { color: var(--accent); }
+
+  .widget-list { padding: 12px 0; }
+  .widget-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px 18px;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    transition: background .2s; cursor: pointer;
+  }
+  .widget-item:hover { background: rgba(232,200,74,.05); }
+  .widget-item:last-child { border-bottom: none; }
+  .widget-thumb {
+    width: 56px; height: 42px; flex-shrink: 0;
+    background: var(--dark); overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: rgba(232,200,74,.2);
+  }
+  .widget-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .widget-info { flex: 1; min-width: 0; }
+  .widget-name {
+    font-size: 12px; color: var(--text); line-height: 1.4;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .widget-date {
+    font-size: 10px;
+    color: var(--muted); margin-top: 4px;
+  }
+
+  /* Contact widget */
+  .contact-widget { padding: 20px 18px; }
+  .contact-row {
+    display: flex; gap: 12px; align-items: flex-start;
+    margin-bottom: 14px; font-size: 13px;
+  }
+  .contact-icon { color: var(--accent); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .contact-label { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+  .contact-value { color: var(--white); font-size: 13px; font-weight: 500; }
+  .contact-value a:hover { color: var(--accent); }
+  .socials { display: flex; gap: 10px; margin-top: 16px; }
+  .social-btn {
+    width: 34px; height: 34px; background: var(--dark);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; transition: all .2s; cursor: pointer;
+  }
+  .social-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--black); }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 0;
+    margin: 0;
+  }
+  .trust-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .trust-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px; border: 1px solid var(--border);
+    background: var(--panel);
+    transition: border-color .2s;
+  }
+  .trust-item:hover { border-color: rgba(232,200,74,.3); }
+  .trust-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: rgba(232,200,74,.1); border: 1px solid rgba(232,200,74,.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .trust-text strong {
+    display: block; font-size: 14px; color: var(--white); font-weight: 600; margin-bottom: 4px;
+  }
+  .trust-text span { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    border-top: 2px solid var(--accent);
+    padding: 48px 0 0;
+  }
+  .footer-inner {
+    max-width: 1280px; margin: 0 auto; padding: 0 24px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  .footer-brand { }
+  .footer-logo {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  }
+  .footer-logo .logo-mark { width: 40px; height: 40px; font-size: 18px; }
+  .footer-desc { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; }
+  .footer-contact-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 12px; color: var(--muted); margin-bottom: 10px;
+  }
+  .footer-contact-row .icon { color: var(--accent); flex-shrink: 0; }
+  .footer-contact-row a:hover { color: var(--accent); }
+
+  .footer-col h4 {
+    font-size: 18px; color: var(--white); letter-spacing: 1.5px;
+    margin-bottom: 16px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 8px; }
+  .footer-col ul li a {
+    font-size: 12px; color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+    transition: color .2s, padding-left .2s;
+  }
+  .footer-col ul li a::before { content: '›'; color: var(--accent); }
+  .footer-col ul li a:hover { color: var(--white); padding-left: 4px; }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    margin-top: 40px; padding: 16px 24px;
+    max-width: 1280px; margin: 40px auto 0;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-copy {
+    font-size: 11px; color: var(--muted);
+  }
+  .footer-copy span { color: var(--accent); }
+  .footer-bottom-links { display: flex; gap: 16px; }
+  .footer-bottom-links a { font-size: 11px; color: var(--muted); }
+  .footer-bottom-links a:hover { color: var(--accent); }
+
+  /* ── FLOATING CONTACT ── */
+  .float-contact {
+    position: fixed; bottom: 24px; right: 24px;
+    display: flex; flex-direction: column; gap: 10px;
+    z-index: 500;
+  }
+  .float-btn {
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--black);
+    background: var(--accent);
+    box-shadow: 0 4px 20px rgba(232,200,74,.4);
+    cursor: pointer; transition: all .2s;
+    position: relative;
+  }
+  .float-btn:hover { transform: scale(1.1); background: #f0d060; }
+  .float-btn.zalo { background: #0068ff; color: white; box-shadow: 0 4px 20px rgba(0,104,255,.3); }
+  .float-btn.zalo:hover { background: #0055cc; }
+  .float-label {
+    position: absolute; right: 56px;
+    background: var(--panel); border: 1px solid var(--border);
+    padding: 4px 10px; font-size: 11px; color: var(--text);
+    white-space: nowrap; opacity: 0; pointer-events: none;
+    transition: opacity .2s;
+  }
+  .float-btn:hover .float-label { opacity: 1; }
+
+  /* ── MOBILE NAV DRAWER ── */
+  .mobile-menu {
+    display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--black); z-index: 999;
+    flex-direction: column; overflow-y: auto;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 24px; border-bottom: 1px solid var(--border);
+  }
+  .mobile-menu-close {
+    font-size: 24px; cursor: pointer; color: var(--muted);
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border);
+  }
+  .mobile-menu-close:hover { color: var(--accent); border-color: var(--accent); }
+  .mobile-nav { padding: 16px 0; }
+  .mobile-nav a {
+    display: block; padding: 14px 24px;
+    font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--muted); border-bottom: 1px solid rgba(255,255,255,.04);
+    transition: color .2s, padding-left .2s;
+  }
+  .mobile-nav a:hover { color: var(--accent); padding-left: 32px; }
+  .mobile-nav .sub a { padding-left: 40px; font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: .3px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .main-layout { grid-template-columns: 1fr; }
+    .sidebar { display: grid; grid-template-columns: repeat(2, 1fr); }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .trust-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    nav { display: none; }
+    .hamburger { display: flex; }
+    .topbar-left { display: none; }
+    .hero::before { font-size: 140px; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .sidebar { grid-template-columns: 1fr; }
+    .trust-inner { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .service-grid { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .service-card { animation: fadeUp .4s ease both; }
+  .service-card:nth-child(1) { animation-delay: .05s; }
+  .service-card:nth-child(2) { animation-delay: .1s; }
+  .service-card:nth-child(3) { animation-delay: .15s; }
+  .service-card:nth-child(4) { animation-delay: .2s; }
+  .service-card:nth-child(5) { animation-delay: .25s; }
+  .service-card:nth-child(6) { animation-delay: .3s; }
+  .hero-stats .stat:nth-child(1) { animation-delay: .3s; }
+  .hero-stats .stat:nth-child(2) { animation-delay: .4s; }
+  .hero-stats .stat:nth-child(3) { animation-delay: .5s; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <span>📍 1107/87G, Đường ĐT 743A, Tân Đông Hiệp, Dĩ An, Bình Dương</span>
+      <span>✉ info@candm-tech.com.vn</span>
+    </div>
+    <div class="topbar-right">
+      <span>🕐 Thứ 2 – Thứ 7: 07:30 – 17:30</span>
+      <a href="tel:0978048661" class="hotline">📞 0978 048 661</a>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo"><img src="./images/logo.svg" alt="C&M TECH Logo" style="height: 100px;" /></a>
+    <nav>
+      <div class="nav-item">
+        <a href="#" class="nav-link active">Trang Chủ</a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link">Giới Thiệu</a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link">Sản Phẩm <span class="arrow">▾</span></a>
+        <div class="dropdown">
+          <a href="#">Hệ Thống Truyền Tải</a>
+          <a href="#">Kết Cấu Thép Nhà Xưởng</a>
+          <a href="#">Bếp Công Nghiệp</a>
+          <a href="#">Hệ Thống Điều Hòa Không Khí</a>
+          <a href="#">Bồn Công Nghiệp</a>
+          <a href="#">Đường Ống Chữa Cháy</a>
+          <a href="#">Hệ Thống Xử Lí Nước Thải</a>
+          <a href="#">Hệ Thống Phòng Sạch</a>
+          <a href="#">Lọc Bụi – Lọc Mùi Công Nghiệp</a>
+          <a href="#">Bảo Trì Công Nghiệp</a>
+          <a href="#">Gia Công Chế Tạo Máy</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <a href="#dich-vu" class="nav-link">Dịch Vụ</a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link">Giải Pháp</a>
+      </div>
+      <div class="nav-item">
+        <a href="#" class="nav-link">Tin Tức</a>
+      </div>
+      <a href="#lien-he" class="nav-contact">Liên Hệ</a>
+    </nav>
+
+    <div class="hamburger" onclick="openMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-header">
+    <a href="#" class="logo">
+      <img src="./logo.svg" alt="C&M TECH Logo" style="height: 52px;" />
+      <img src="https://github.com/user-attachments/assets/751d3886-4444-4860-abae-dc94cdd88d72" alt="C&M TECH Logo" style="height: 52px;" />
+    </a>
+    <div class="mobile-menu-close" onclick="closeMenu()">×</div>
+  </div>
+  <div class="mobile-nav">
+    <a href="#" onclick="closeMenu()">Trang Chủ</a>
+    <a href="#" onclick="closeMenu()">Giới Thiệu</a>
+    <a href="#" onclick="closeMenu()">Sản Phẩm ▾</a>
+    <div class="sub">
+      <a href="#" onclick="closeMenu()">Hệ Thống Truyền Tải</a>
+      <a href="#" onclick="closeMenu()">Kết Cấu Thép Nhà Xưởng</a>
+      <a href="#" onclick="closeMenu()">Bếp Công Nghiệp</a>
+      <a href="#" onclick="closeMenu()">Hệ Thống Điều Hòa</a>
+      <a href="#" onclick="closeMenu()">Lọc Bụi – Lọc Mùi CN</a>
+    </div>
+    <a href="#dich-vu" onclick="closeMenu()">Dịch Vụ</a>
+    <a href="#" onclick="closeMenu()">Giải Pháp</a>
+    <a href="#" onclick="closeMenu()">Tin Tức</a>
+    <a href="#lien-he" onclick="closeMenu()">Liên Hệ</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">Đang hoạt động — Bình Dương & Đồng Nai</div>
+      <h2>C&M</h2>
+        <h1><span>Kỹ Thuật</span> & Công Nghệ</h1>
+      <p>Chuyên thiết kế, chế tạo, lắp đặt các hệ thống công nghiệp chất lượng cao. Giải pháp toàn diện — từ hệ thống xử lý bụi, băng tải đến kết cấu thép nhà xưởng.</p>
+      <div class="hero-ctas">
+        <a href="#dich-vu" class="btn-primary">Xem Dịch Vụ</a>
+        <a href="#lien-he" class="btn-outline">Liên Hệ Ngay</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Năm Kinh Nghiệm</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Dự Án Hoàn Thành</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Cam Kết Chất Lượng</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="#">Trang Chủ</a>
+    <span class="sep">/</span>
+    <span class="current">Dịch Vụ</span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-layout" id="dich-vu">
+
+  <!-- SERVICE LISTING -->
+  <main>
+    <div class="section-title">
+      <h2>Dịch Vụ</h2>
+    </div>
+
+    <div class="service-grid">
+
+      <div class="service-card">
+        <div class="card-img">
+          <img src="./images/dich-vu-01.jpg" alt="Thi Công Nhà Thép Tiền Chế Đồng Nai Tốt Nhất" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 07/2024</div>
+          <div class="card-title">Thi Công Nhà Thép Tiền Chế Đồng Nai Tốt Nhất</div>
+          <div class="card-excerpt">C&M chuyên thi công nhà thép tiền chế Đồng Nai trọn gói theo yêu cầu, cam kết chất lượng, giá tốt nhất thị trường.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <img src="./images/dich-vu-2.jpg" alt="Thi Công Hệ Thống Hút Bụi Gỗ Bình Dương Chuyên Nghiệp" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 07/2024</div>
+          <div class="card-title">Thi Công Hệ Thống Hút Bụi Gỗ Bình Dương Chuyên Nghiệp</div>
+          <div class="card-excerpt">Đội ngũ kỹ thuật viên tay nghề cao, trang thiết bị hiện đại, đảm bảo thi công hệ thống hút bụi gỗ hiệu quả và an toàn.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <img src="./images/dich-vu-3.jpg" alt="Thi Công Hệ Thống Xử Lý Bụi Uy Tín Bình Dương" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 07/2024</div>
+          <div class="card-title">Thi Công Hệ Thống Xử Lý Bụi Uy Tín Bình Dương</div>
+          <div class="card-excerpt">Chuyên thi công hệ thống xử lý bụi uy tín Bình Dương, cung cấp giải pháp hiệu quả với giá cả cạnh tranh nhất thị trường.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <img src="./images/dich-vu-4.webp" alt="Lắp Đặt Hệ Thống Xử Lý Nước Thải Bình Dương" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 07/2024</div>
+          <div class="card-title">Lắp Đặt Hệ Thống Xử Lý Nước Thải Bình Dương</div>
+          <div class="card-excerpt">C&M là đơn vị chuyên thiết kế lắp đặt hệ thống xử lý nước thải Bình Dương uy tín với giá thành cạnh tranh nhất.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">05</div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 07/2024</div>
+          <div class="card-title">Chế Tạo Và Lắp Đặt Gầu Tải Chất Lượng Đồng Nai</div>
+          <div class="card-excerpt">C&M chuyên chế tạo và lắp đặt gầu tải chất lượng cao, cam kết về chất lượng sản phẩm sản xuất và chế tạo.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">06</div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 07/2024</div>
+          <div class="card-title">Sản Xuất Lắp Đặt Vít Tải Công Nghiệp Đồng Nai</div>
+          <div class="card-excerpt">C&M là đơn vị chuyên sản xuất lắp đặt hệ thống vít tải công nghiệp Đồng Nai, ứng dụng công nghệ và giải pháp tiên tiến.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">07</div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 07/2024</div>
+          <div class="card-title">Chế Tạo Và Lắp Đặt Hệ Thống Băng Tải Bình Dương</div>
+          <div class="card-excerpt">Chuyên chế tạo lắp đặt hệ thống băng tải Bình Dương chất lượng cao đạt tiêu chuẩn quốc tế, vận hành ổn định.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">08</div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 07/2024</div>
+          <div class="card-title">Thi Công Lắp Đặt Nhà Tiền Chế Bình Dương Chuyên Nghiệp</div>
+          <div class="card-excerpt">C&M là đơn vị thi công lắp đặt nhà tiền chế Bình Dương chuyên nghiệp nhiều năm, đảm bảo độ bền và tính thẩm mỹ cao.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">09</div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 05/2024</div>
+          <div class="card-title">Bảo Trì Thiết Bị Máy Công Nghiệp — Quy Trình Đúng Tiêu Chuẩn</div>
+          <div class="card-excerpt">Dịch vụ bảo trì thiết bị máy công nghiệp với quy trình hoàn hảo, tuân thủ các tiêu chuẩn chất lượng quốc tế.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">10</div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 05/2024</div>
+          <div class="card-title">Hệ Thống Hút Khói Bếp Công Nghiệp</div>
+          <div class="card-excerpt">Thiết bị hiện đại, chất lượng cao — C&M mang đến không gian bếp sạch sẽ, thông thoáng và an toàn cho người vận hành.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">11</div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 04/2024</div>
+          <div class="card-title">Hệ Thống Hút Bụi Công Nghiệp — Lọc Bụi Công Nghiệp</div>
+          <div class="card-excerpt">Giải pháp làm sạch không khí trong nhà máy, nhà xưởng. Hệ thống hút bụi công nghiệp là lựa chọn hàng đầu cho doanh nghiệp.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="card-img">
+          <div class="card-img-placeholder">12</div>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">Tháng 04/2024</div>
+          <div class="card-title">Thiết Kế Băng Tải Cao Su Chất Lượng Cao</div>
+          <div class="card-excerpt">Băng tải cao su cung cấp sự linh hoạt trong vận chuyển, đảm bảo an toàn và hiệu suất trong quy trình sản xuất hiện đại.</div>
+          <div class="card-link">Xem Chi Tiết</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <div class="page-btn">‹</div>
+      <div class="page-btn active">1</div>
+      <div class="page-btn">2</div>
+      <div class="page-btn">›</div>
+    </div>
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- New Services -->
+    <div class="sidebar-widget">
+      <div class="widget-title">Dịch Vụ <span>Mới</span></div>
+      <div class="widget-list">
+        <div class="widget-item">
+          <div class="widget-thumb">01</div>
+          <div class="widget-info">
+            <div class="widget-name">Thi Công Nhà Thép Tiền Chế Đồng Nai Tốt Nhất</div>
+            <div class="widget-date">Tháng 07/2024</div>
+          </div>
+        </div>
+        <div class="widget-item">
+          <div class="widget-thumb">02</div>
+          <div class="widget-info">
+            <div class="widget-name">Thi Công Hệ Thống Hút Bụi Gỗ Bình Dương</div>
+            <div class="widget-date">Tháng 07/2024</div>
+          </div>
+        </div>
+        <div class="widget-item">
+          <div class="widget-thumb">03</div>
+          <div class="widget-info">
+            <div class="widget-name">Hệ Thống Xử Lý Bụi Uy Tín Bình Dương</div>
+            <div class="widget-date">Tháng 07/2024</div>
+          </div>
+        </div>
+        <div class="widget-item">
+          <div class="widget-thumb">04</div>
+          <div class="widget-info">
+            <div class="widget-name">Lắp Đặt Hệ Thống Xử Lý Nước Thải Bình Dương</div>
+            <div class="widget-date">Tháng 07/2024</div>
+          </div>
+        </div>
+        <div class="widget-item">
+          <div class="widget-thumb">05</div>
+          <div class="widget-info">
+            <div class="widget-name">Chế Tạo Gầu Tải Chất Lượng Đồng Nai</div>
+            <div class="widget-date">Tháng 07/2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Services -->
+    <div class="sidebar-widget">
+      <div class="widget-title">Dịch Vụ <span>Nổi Bật</span></div>
+      <div class="widget-list">
+        <div class="widget-item">
+          <div class="widget-thumb">★</div>
+          <div class="widget-info">
+            <div class="widget-name">Thi Công Nhà Thép Tiền Chế Đồng Nai</div>
+            <div class="widget-date">Tháng 07/2024</div>
+          </div>
+        </div>
+        <div class="widget-item">
+          <div class="widget-thumb">★</div>
+          <div class="widget-info">
+            <div class="widget-name">Hệ Thống Băng Tải Công Nghiệp</div>
+            <div class="widget-date">Tháng 07/2024</div>
+          </div>
+        </div>
+        <div class="widget-item">
+          <div class="widget-thumb">★</div>
+          <div class="widget-info">
+            <div class="widget-name">Bảo Trì Máy Công Nghiệp Bình Dương</div>
+            <div class="widget-date">Tháng 05/2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Widget -->
+    <div class="sidebar-widget" id="lien-he">
+      <div class="widget-title">Liên <span>Hệ</span></div>
+      <div class="contact-widget">
+        <div class="contact-row">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Địa Chỉ</div>
+            <div class="contact-value">1107/87G, Đường ĐT 743A, Tân Đông Hiệp, Dĩ An, Bình Dương</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Hotline</div>
+            <div class="contact-value"><a href="tel:0978048661">0978 048 661</a></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">✉</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value"><a href="mailto:info@candm-tech.com.vn">info@candm-tech.com.vn</a></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-label">Giờ Làm Việc</div>
+            <div class="contact-value">T2 – T7: 07:30 – 17:30</div>
+          </div>
+        </div>
+        <div class="socials">
+          <div class="social-btn" title="Facebook">f</div>
+          <div class="social-btn" title="Zalo">Z</div>
+          <div class="social-btn" title="YouTube">▶</div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- TRUST BAR -->
+<section class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-icon">🚚</div>
+      <div class="trust-text">
+        <strong>Giao Hàng Toàn Quốc</strong>
+        <span>Vận chuyển nhanh chóng toàn quốc không giới hạn khu vực</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🎁</div>
+      <div class="trust-text">
+        <strong>Ưu Đãi Hấp Dẫn</strong>
+        <span>Nhiều ưu đãi hấp dẫn áp dụng cho hợp đồng từ 500K trở lên</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">💳</div>
+      <div class="trust-text">
+        <strong>Thanh Toán Tiện Lợi</strong>
+        <span>Thanh toán online nhanh chóng, COD giao hàng tận nơi</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo"><img src="./logo.svg" alt="C&M TECH Logo" style="height: 52px;" /></div>
+      <div class="footer-logo"><img src="https://github.com/user-attachments/assets/751d3886-4444-4860-abae-dc94cdd88d72" alt="C&M TECH Logo" style="height: 52px;" /></div>
+      <p class="footer-desc">Công ty TNHH Kỹ Thuật & Công Nghệ C&M — chuyên thiết kế, chế tạo, lắp đặt các hệ thống công nghiệp chất lượng cao tại Bình Dương, Đồng Nai và toàn quốc.</p>
+      <div class="footer-contact-row"><span class="icon">📍</span> 1107/87G, Đường ĐT 743A, Tân Đông Hiệp, Dĩ An, Bình Dương</div>
+      <div class="footer-contact-row"><span class="icon">📞</span> <a href="tel:0978048661">0978 048 661</a></div>
+      <div class="footer-contact-row"><span class="icon">✉</span> <a href="mailto:info@candm-tech.com.vn">info@candm-tech.com.vn</a></div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Menu</h4>
+      <ul>
+        <li><a href="#">Trang Chủ</a></li>
+        <li><a href="#">Giới Thiệu</a></li>
+        <li><a href="#">Sản Phẩm</a></li>
+        <li><a href="#">Dịch Vụ</a></li>
+        <li><a href="#">Giải Pháp</a></li>
+        <li><a href="#">Tin Tức</a></li>
+        <li><a href="#">Liên Hệ</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Sản Phẩm</h4>
+      <ul>
+        <li><a href="#">Hệ Thống Truyền Tải</a></li>
+        <li><a href="#">Kết Cấu Thép Nhà Xưởng</a></li>
+        <li><a href="#">Bếp Công Nghiệp</a></li>
+        <li><a href="#">Hệ Thống Điều Hòa</a></li>
+        <li><a href="#">Bồn Công Nghiệp</a></li>
+        <li><a href="#">Lọc Bụi – Lọc Mùi CN</a></li>
+        <li><a href="#">Bảo Trì Công Nghiệp</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Dịch Vụ</h4>
+      <ul>
+        <li><a href="#">Thi Công Nhà Thép</a></li>
+        <li><a href="#">Hút Bụi Gỗ Bình Dương</a></li>
+        <li><a href="#">Xử Lý Bụi Công Nghiệp</a></li>
+        <li><a href="#">Xử Lý Nước Thải</a></li>
+        <li><a href="#">Băng Tải Cao Su</a></li>
+        <li><a href="#">Bảo Trì Máy CN</a></li>
+        <li><a href="#">Hệ Thống Phòng Sạch</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 <span>C&M TECH</span> — CÔNG TY TNHH KỸ THUẬT & CÔNG NGHỆ C&M</div>
+    <div class="footer-bottom-links">
+      <a href="#">Chính Sách Bảo Mật</a>
+      <a href="#">Điều Khoản Sử Dụng</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CONTACT -->
+<div class="float-contact">
+  <a href="https://zalo.me/0978048661" class="float-btn zalo">
+    <span style="font-size:13px;font-weight:700;">Z</span>
+    <div class="float-label">Chat Zalo</div>
+  </a>
+  <a href="tel:0978048661" class="float-btn">
+    📞
+    <div class="float-label">0978 048 661</div>
+  </a>
+</div>
+
+<script>
+  function openMenu() {
+    document.getElementById('mobileMenu').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Sticky header shadow on scroll
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    header.style.boxShadow = window.scrollY > 10
+      ? '0 4px 40px rgba(232,200,74,.15)'
+      : '0 4px 40px rgba(0,0,0,.6)';
+  });
+
+  // Pagination click
+  document.querySelectorAll('.page-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      if (this.textContent === '‹' || this.textContent === '›') return;
+      document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Counter animation on scroll
+  const statsSection = document.querySelector('.hero-stats');
+  if (statsSection) {
+    const animateCounter = (obj, start, end, duration, suffix = '') => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const currentValue = Math.floor(progress * (end - start) + start);
+            obj.textContent = currentValue + suffix;
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                obj.textContent = end + suffix; // Ensure final value is exact
+            }
+        };
+        window.requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                document.querySelectorAll('.stat-num').forEach(statNum => {
+                    const originalText = statNum.textContent;
+                    const suffix = originalText.includes('%') ? '%' : (originalText.includes('+') ? '+' : '');
+                    const targetValue = parseInt(originalText.replace(/[+%]/g, ''));
+                    animateCounter(statNum, 0, targetValue, 1500, suffix);
+                });
+                observer.unobserve(entry.target); // Stop observing after animation starts
+            }
+        });
+    }, { threshold: 0.5 });
+
+    observer.observe(statsSection);
+  }
+</script>
+</body>
+</html>
